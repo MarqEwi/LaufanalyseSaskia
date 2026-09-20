@@ -19,8 +19,10 @@ Vorlagen liegen unter workouts/<person>/<name>.json (Person = logged_in_as aus l
       ]
     }
 
+  sport:   "running" (Standard) oder "other" (gemischte Einheiten mit Stationen, z. B. Hyrox)
   type:    warmup | interval | recovery | rest | cooldown
-  Dauer:   "minutes" (Zeit) oder "km" (Distanz), genau eins von beiden
+  Dauer:   "minutes" (Zeit), "km" (Distanz) oder "lap": true (Ende per Lap-Taste, für Stationen ohne Messung), genau eins
+  note:    Text, den die Uhr zum Schritt anzeigt (Stationsname, RPE)
   Ziel:    "hr": [von, bis] in bpm  oder  "pace": ["langsam", "schnell"] in m:ss min/km  oder nichts (kein Ziel)
   repeat:  Wiederholungsgruppe mit "steps"
 
@@ -92,15 +94,19 @@ def _target(step: dict[str, Any]) -> dict[str, Any]:
 
 def _end(step: dict[str, Any]) -> tuple[dict[str, Any], float, float]:
     """Endbedingung, Wert, geschätzte Dauer in Sekunden."""
-    if ("minutes" in step) == ("km" in step):
-        raise ValueError(f"Schritt braucht genau eins von 'minutes' oder 'km': {step}")
+    given = [k for k in ("minutes", "km", "lap") if k in step]
+    if len(given) != 1:
+        raise ValueError(f"Schritt braucht genau eins von 'minutes', 'km' oder 'lap': {step}")
+    if "lap" in step:
+        return ({"conditionTypeId": 1, "conditionTypeKey": "lap.button", "displayOrder": 1, "displayable": True}, 0.0,
+                float(step.get("estimate_minutes", 2)) * 60)
     if "minutes" in step:
         secs = float(step["minutes"]) * 60
         return ({"conditionTypeId": 2, "conditionTypeKey": "time", "displayOrder": 2, "displayable": True}, secs, secs)
     meters = float(step["km"]) * 1000
     # Dauer-Schätzung nur für estimatedDurationInSecs (Anzeige), 6:00 min/km falls keine Pace vorgegeben
     mps = _pace_to_mps(step["pace"][0]) if "pace" in step else 1000 / 360
-    return ({"conditionTypeId": 1, "conditionTypeKey": "distance", "displayOrder": 1, "displayable": True}, meters, meters / mps)
+    return ({"conditionTypeId": 3, "conditionTypeKey": "distance", "displayOrder": 3, "displayable": True}, meters, meters / mps)
 
 
 def _build_steps(steps: list[dict[str, Any]], order: list[int]) -> tuple[list[dict[str, Any]], float]:
@@ -146,7 +152,12 @@ def _build_steps(steps: list[dict[str, Any]], order: list[int]) -> tuple[list[di
 
 def build(spec: dict[str, Any]) -> dict[str, Any]:
     steps, secs = _build_steps(spec["steps"], [0])
-    sport = {"sportTypeId": 1, "sportTypeKey": "running", "displayOrder": 1}
+    sports = {"running": {"sportTypeId": 1, "sportTypeKey": "running", "displayOrder": 1},
+              "other": {"sportTypeId": 3, "sportTypeKey": "other", "displayOrder": 13}}
+    sport_key = spec.get("sport", "running")
+    if sport_key not in sports:
+        raise ValueError(f"sport muss running oder other sein, nicht {sport_key!r}")
+    sport = sports[sport_key]
     payload = {
         "workoutName": spec["name"],
         "description": spec.get("description"),
@@ -154,9 +165,9 @@ def build(spec: dict[str, Any]) -> dict[str, Any]:
         "estimatedDurationInSecs": int(round(secs)),
         "workoutSegments": [{"segmentOrder": 1, "sportType": sport, "workoutSteps": steps}],
     }
-    from garminconnect.workout import RunningWorkout  # Struktur gegen die Bibliotheksmodelle prüfen
+    from garminconnect.workout import BaseWorkout  # Struktur gegen die Bibliotheksmodelle prüfen
 
-    return RunningWorkout(**payload).to_dict()
+    return BaseWorkout(**payload).to_dict()
 
 
 def _describe(steps: list[dict[str, Any]], indent: str = "") -> list[str]:
@@ -170,6 +181,8 @@ def _describe(steps: list[dict[str, Any]], indent: str = "") -> list[str]:
         if s["endCondition"]["conditionTypeKey"] == "time":
             v = s["endConditionValue"]
             dur = f"{int(v // 60)}:{int(v % 60):02d} min"
+        elif s["endCondition"]["conditionTypeKey"] == "lap.button":
+            dur = "Lap-Taste"
         else:
             dur = f"{s['endConditionValue'] / 1000:.2f} km"
         tt = s["targetType"]["workoutTargetTypeKey"]
@@ -214,7 +227,7 @@ def main() -> int:
 
     if args.cmd == "show":
         payload = build(_load_spec(args.spec))
-        print(f"{payload['workoutName']}  (geschätzt {payload['estimatedDurationInSecs'] // 60} min)")
+        print(f"{payload['workoutName']}  [{payload['sportType']['sportTypeKey']}]  (geschätzt {payload['estimatedDurationInSecs'] // 60} min)")
         if payload.get("description"):
             print(payload["description"])
         print("\n".join(_describe(payload["workoutSegments"][0]["workoutSteps"])))
