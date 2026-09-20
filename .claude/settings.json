@@ -1,0 +1,23 @@
+{
+  "enableAllProjectMcpServers": true,
+  "permissions": {
+    "allow": [
+      "mcp__garmin__create_workout",
+      "mcp__garmin__schedule_workout",
+      "mcp__garmin__unschedule_workout",
+      "mcp__garmin__delete_workout"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session-start.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
