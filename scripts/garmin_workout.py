@@ -19,7 +19,10 @@ Vorlagen liegen unter workouts/<person>/<name>.json (Person = logged_in_as aus l
       ]
     }
 
-  sport:   "running" (Standard) oder "other" (gemischte Einheiten mit Stationen, z. B. Hyrox)
+  sport:   "running" (Standard, Läufe), "cycling" (Rad), "cardio" (Hyrox, Stationen, Rudern, Ski Erg, gemischte
+           Einheiten; erscheint auf der Uhr im Profil Cardio bzw. dessen Kopie „Hybrid“ unter Meine Workouts),
+           "strength" (Kraft). "other" nur im Ausnahmefall: solche Workouts zeigt kein Uhrenprofil unter Meine
+           Workouts, sie erscheinen nur als Kalender-Workout des Tages.
   type:    warmup | interval | recovery | rest | cooldown
   Dauer:   "minutes" (Zeit), "km" (Distanz) oder "lap": true (Ende per Lap-Taste, für Stationen ohne Messung), genau eins
   note:    Text, den die Uhr zum Schritt anzeigt (Stationsname, RPE)
@@ -32,6 +35,8 @@ Befehle (alle ohne Nebenwirkung außer upload/schedule/delete):
     uv run scripts/garmin_workout.py upload workouts/saskia/schwelle-3x10min.json   # nach Garmin Connect hochladen
     uv run scripts/garmin_workout.py schedule <workout_id> 2026-09-24               # im Garmin-Kalender einplanen
     uv run scripts/garmin_workout.py list                                           # Workouts im Konto
+    uv run scripts/garmin_workout.py scheduled 2026-09                              # Kalender-Workouts eines Monats
+    uv run scripts/garmin_workout.py unschedule <scheduled_workout_id>              # aus dem Kalender nehmen
     uv run scripts/garmin_workout.py delete <workout_id>
 
 Hochladen, Einplanen und Löschen nur nach ausdrücklicher Bestätigung der Person (CLAUDE.md).
@@ -46,6 +51,14 @@ from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+SPORTS = {
+    "running": {"sportTypeId": 1, "sportTypeKey": "running", "displayOrder": 1},
+    "cycling": {"sportTypeId": 2, "sportTypeKey": "cycling", "displayOrder": 2},
+    "other": {"sportTypeId": 3, "sportTypeKey": "other", "displayOrder": 13},
+    "strength": {"sportTypeId": 5, "sportTypeKey": "strength_training", "displayOrder": 5},
+    "cardio": {"sportTypeId": 6, "sportTypeKey": "cardio_training", "displayOrder": 6},
+}
 
 STEP_TYPES = {
     "warmup": (1, "warmup", 1),
@@ -152,12 +165,10 @@ def _build_steps(steps: list[dict[str, Any]], order: list[int]) -> tuple[list[di
 
 def build(spec: dict[str, Any]) -> dict[str, Any]:
     steps, secs = _build_steps(spec["steps"], [0])
-    sports = {"running": {"sportTypeId": 1, "sportTypeKey": "running", "displayOrder": 1},
-              "other": {"sportTypeId": 3, "sportTypeKey": "other", "displayOrder": 13}}
     sport_key = spec.get("sport", "running")
-    if sport_key not in sports:
-        raise ValueError(f"sport muss running oder other sein, nicht {sport_key!r}")
-    sport = sports[sport_key]
+    if sport_key not in SPORTS:
+        raise ValueError(f"sport muss eins von {', '.join(SPORTS)} sein, nicht {sport_key!r}")
+    sport = SPORTS[sport_key]
     payload = {
         "workoutName": spec["name"],
         "description": spec.get("description"),
@@ -221,6 +232,10 @@ def main() -> int:
     p.add_argument("workout_id", type=int)
     p.add_argument("date", help="YYYY-MM-DD")
     sub.add_parser("list", help="Workouts im Konto auflisten")
+    p = sub.add_parser("scheduled", help="Kalender-Workouts eines Monats auflisten")
+    p.add_argument("month", help="YYYY-MM")
+    p = sub.add_parser("unschedule", help="Kalender-Eintrag entfernen (Workout bleibt im Konto)")
+    p.add_argument("scheduled_workout_id", type=int)
     p = sub.add_parser("delete", help="Workout aus dem Konto löschen")
     p.add_argument("workout_id", type=int)
     args = ap.parse_args()
@@ -250,6 +265,22 @@ def main() -> int:
         for w in _client().get_workouts(0, 50):
             print(f"{w.get('workoutId')}  {w.get('workoutName')}  ({w.get('sportType', {}).get('sportTypeKey')}, "
                   f"geändert {str(w.get('updateDate') or w.get('updatedDate') or '')[:10]})")
+        return 0
+
+    if args.cmd == "scheduled":
+        year, month = (int(x) for x in args.month.split("-"))
+        cal = _client().get_scheduled_workouts(year, month)
+        items = [it for it in (cal.get("calendarItems") or []) if it.get("itemType") == "workout"]
+        for it in sorted(items, key=lambda x: str(x.get("date") or "")):
+            print(f"{it.get('date')}  scheduled_id {it.get('id')}  workout_id {it.get('workoutId')}  "
+                  f"{it.get('title')}  ({it.get('sportTypeKey') or '?'})")
+        if not items:
+            print("keine Kalender-Workouts in diesem Monat")
+        return 0
+
+    if args.cmd == "unschedule":
+        _client().unschedule_workout(args.scheduled_workout_id)
+        print(f"Aus dem Kalender entfernt: scheduled_workout_id {args.scheduled_workout_id}")
         return 0
 
     if args.cmd == "delete":

@@ -1,6 +1,6 @@
 {
   "name": "Hyrox Flow Foundation 60min AMRAP",
-  "sport": "other",
+  "sport": "cardio",
   "description": "Coach Engelhardt, 20.09.2026: 60 min AMRAP, ganze Einheit RPE 3-4, Laufen RPE 4-5 (Talking Pace). Runde: 3min Run, 10m Sled Push, 1000m Ski, 10m Sled Pull, 4min Run, 50m Carry, 5min Run, 25m Walking Lunges, 1000m Row, 25 Wall Balls. Laeufe mit HF-Ziel bis 141 bpm (Zone 1-2 Coach Nils). Stationen mit Lap-Taste beenden. Nach 60 Minuten stoppen, egal wo in der Runde.",
   "steps": [
     {"repeat": 3, "steps": [

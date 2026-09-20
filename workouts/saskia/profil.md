@@ -45,6 +45,10 @@ aktualisieren und das Datum anpassen.
 - Uhr: Garmin fenix 5. Sie unterstützt Workouts mit eigenen HF- und Pace-Bereichen (so sind die Vorlagen hier
   gebaut). Laufdynamik (Bodenkontakt, vertikale Bewegung) und Leistung liefert sie nur mit HRM-Run/HRM-Tri-Gurt
   oder Running-Dynamics-Pod; ohne Zubehör fehlen diese Felder in der Analyse, das ist kein Fehler.
+- Uhrenprofil „Hybrid“: Kopie des Profils Cardio auf der fenix 5, GPS aus, Auto Lap aus, Auto Pause aus, Rundentaste an.
+  Darin erscheinen Workouts der Sportart `cardio` unter Meine Workouts; Hyrox-Einheiten werden dort gestartet.
+- Brustgurt: nicht bekannt (nachtragen). Ohne Gurt misst die fenix 5 die HF am Handgelenk; bei Stationen mit
+  Griffbelastung (Sled, Carry, Rudern) ist die Handgelenksmessung unzuverlässig.
 - Wettkampfziel: Hyrox Hamburg, Women Pro, 30.10.2026. Trainingsziel: Hyrox Pro (Laufabschnitte 8 × 1 km
   zwischen den Stationen, dazu die Kraft-/Ausdauerstationen). Laufeinheiten darauf ausrichten: Schwellen- und
   Tempoarbeit über 1-km-Abschnitte mit kurzen Pausen, Laufen unter Vorermüdung, Grundlage in Zone 2.
