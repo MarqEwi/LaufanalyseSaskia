@@ -19,7 +19,7 @@
 - Zugangsdaten und Tokens liegen pro Umgebung (`GARMIN_EMAIL`, `GARMIN_PASSWORD` nur bis zum ersten Token, danach `GARMIN_TOKENS_B64`). Das Konto der jeweils anderen Person wird nie angefasst.
 - Datenordner sind pro Umgebung getrennt: `LAUFANALYSE_DATA_DIR` setzt der Session-Start-Hook (`.claude/hooks/session-start.sh`) bzw. die Umgebung.
 - Workout-Vorlagen liegen unter `workouts/<person>/` (`marc` oder `saskia`, Kleinbuchstaben); die Skill `/workout` speichert nach der Person aus `login_status`.
-- Saskia: Uhr, Coach/Zonen und Trainingsschwerpunkt sind noch nicht hinterlegt (hier ergänzen, sobald bekannt).
+- Trainingsprofil je Person unter `workouts/<person>/profil.md` (Coach-Zonen, Schwellenwerte). Saskia: Coach Nils, LTHR 158 bpm, Schwellenpace 5:22 min/km (Eingangstest 10.06.2026), Details in `workouts/saskia/profil.md`. Für Trainingsplanung und Workout-Vorlagen gelten die Coach-Zonen aus dem Profil, nicht die Garmin-Zonen. Uhr und Trainingsschwerpunkt für Saskia noch offen.
 - Zweite Person am Windows-PC: eigener Token-Ordner `%USERPROFILE%\.garminconnect-saskia`, siehe `docs/garmin-tools.md` Abschnitt 2a.
 
 ## Regeln für dieses Projekt
