@@ -1,16 +1,16 @@
 {
   "name": "Hyrox Flow Foundation 60min AMRAP",
   "sport": "other",
-  "description": "Coach Engelhardt, 20.09.2026: 60 min AMRAP, ganze Einheit RPE 3-4, Laufen RPE 4-5 (Talking Pace). Runde: 3min Run, 10m Sled Push, 1000m Ski, 10m Sled Pull, 4min Run, 50m Carry, 5min Run, 25m Walking Lunges, 1000m Row, 25 Wall Balls. Stationen mit Lap-Taste beenden. Nach 60 Minuten stoppen, egal wo in der Runde.",
+  "description": "Coach Engelhardt, 20.09.2026: 60 min AMRAP, ganze Einheit RPE 3-4, Laufen RPE 4-5 (Talking Pace). Runde: 3min Run, 10m Sled Push, 1000m Ski, 10m Sled Pull, 4min Run, 50m Carry, 5min Run, 25m Walking Lunges, 1000m Row, 25 Wall Balls. Laeufe mit HF-Ziel bis 141 bpm (Zone 1-2 Coach Nils). Stationen mit Lap-Taste beenden. Nach 60 Minuten stoppen, egal wo in der Runde.",
   "steps": [
     {"repeat": 3, "steps": [
-      {"type": "interval", "minutes": 3, "note": "Run 3min RPE 4-5 Talking Pace"},
+      {"type": "interval", "minutes": 3, "hr": [90, 141], "note": "Run 3min RPE 4-5 Talking Pace, HF bis 141"},
       {"type": "interval", "lap": true, "estimate_minutes": 1, "note": "Sled Push 10m, dann Lap"},
       {"type": "interval", "lap": true, "estimate_minutes": 5, "note": "Ski 1000m, dann Lap"},
       {"type": "interval", "lap": true, "estimate_minutes": 1, "note": "Sled Pull 10m, dann Lap"},
-      {"type": "interval", "minutes": 4, "note": "Run 4min RPE 4-5 Talking Pace"},
+      {"type": "interval", "minutes": 4, "hr": [90, 141], "note": "Run 4min RPE 4-5 Talking Pace, HF bis 141"},
       {"type": "interval", "lap": true, "estimate_minutes": 1, "note": "Carry 50m, dann Lap"},
-      {"type": "interval", "minutes": 5, "note": "Run 5min RPE 4-5 Talking Pace"},
+      {"type": "interval", "minutes": 5, "hr": [90, 141], "note": "Run 5min RPE 4-5 Talking Pace, HF bis 141"},
       {"type": "interval", "lap": true, "estimate_minutes": 2, "note": "Walking Lunges 25m, dann Lap"},
       {"type": "interval", "lap": true, "estimate_minutes": 5, "note": "Row 1000m, dann Lap"},
       {"type": "interval", "lap": true, "estimate_minutes": 2, "note": "25 Wall Balls, dann Lap"}
