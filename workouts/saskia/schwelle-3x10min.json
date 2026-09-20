@@ -1,0 +1,12 @@
+{
+  "name": "Schwelle 3x10min (Coach-Zonen)",
+  "description": "Schwellentraining nach den HF-Zonen von Coach Nils (Eingangstest 10.06.2026, LTHR 158). Belastung in Zone 4 (150-156 bpm), Pausen und Ein-/Auslaufen in Zone 1 (unter 134 bpm). Pace-Vorgabe der Zone 4 laut Test: 5:18-5:38 min/km.",
+  "steps": [
+    {"type": "warmup", "minutes": 10, "hr": [90, 134], "note": "Einlaufen Zone 1"},
+    {"repeat": 3, "steps": [
+      {"type": "interval", "minutes": 10, "hr": [150, 156], "note": "Zone 4 Schwelle"},
+      {"type": "recovery", "minutes": 3, "hr": [90, 134], "note": "Trabpause Zone 1"}
+    ]},
+    {"type": "cooldown", "minutes": 10, "hr": [90, 134], "note": "Auslaufen Zone 1"}
+  ]
+}

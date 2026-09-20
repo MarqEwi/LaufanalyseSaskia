@@ -42,4 +42,9 @@ aktualisieren und das Datum anpassen.
   schneller als die Schwellenpace 5:22 aus dem Juni. Die Pace-Zonen dürften nicht mehr aktuell sein; ob
   die HF-Zonen noch passen, kann nur ein neuer Test klären. Keine eigenen Zonen ableiten, sondern beim
   Coach nach einem Folgetest fragen.
-- Noch offen: Uhrenmodell, Trainingsschwerpunkt, Wettkampfziele.
+- Uhr: Garmin fenix 5. Sie unterstützt Workouts mit eigenen HF- und Pace-Bereichen (so sind die Vorlagen hier
+  gebaut). Laufdynamik (Bodenkontakt, vertikale Bewegung) und Leistung liefert sie nur mit HRM-Run/HRM-Tri-Gurt
+  oder Running-Dynamics-Pod; ohne Zubehör fehlen diese Felder in der Analyse, das ist kein Fehler.
+- Wettkampfziel: Hyrox Hamburg, Women Pro, 30.10.2026. Trainingsziel: Hyrox Pro (Laufabschnitte 8 × 1 km
+  zwischen den Stationen, dazu die Kraft-/Ausdauerstationen). Laufeinheiten darauf ausrichten: Schwellen- und
+  Tempoarbeit über 1-km-Abschnitte mit kurzen Pausen, Laufen unter Vorermüdung, Grundlage in Zone 2.
