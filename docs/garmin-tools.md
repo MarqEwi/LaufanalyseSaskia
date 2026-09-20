@@ -44,6 +44,83 @@ Garmin bremst wiederholte Logins mit „429 Too Many Requests“ – deshalb Tok
 nach 429 einige Minuten warten. Login aus Rechenzentrums-IPs (Cloud) kann von Cloudflare blockiert werden;
 die Bibliothek probiert fünf Strategien, sicherer ist aber immer der Token-Transfer vom PC.
 
+## 2a. Zweite Person am selben Windows-PC (eigener Token-Ordner)
+
+Ausgangslage: Marc und Saskia nutzen denselben Windows-Benutzer. Die Benutzer-Umgebungsvariablen
+(`GARMIN_EMAIL`, `GARMIN_PASSWORD`, `GARMINTOKENS`, `LAUFANALYSE_DATA_DIR`) gehören Marc und bleiben
+unverändert. Saskia bekommt einen **zweiten Token-Ordner** und einen **zweiten Datenordner**; die Skripte
+und der MCP-Server sind dieselben, sie folgen nur anderen Umgebungsvariablen.
+
+| Variable | Marc (Benutzer-Umgebung, Standard) | Saskia (nur in der jeweiligen Sitzung gesetzt) |
+|---|---|---|
+| `GARMINTOKENS` | `%USERPROFILE%\.garminconnect` | `%USERPROFILE%\.garminconnect-saskia` |
+| `LAUFANALYSE_DATA_DIR` | `<Repo>\data\garmin` | `<Repo>\data\garmin-saskia` (durch `.gitignore` `data/*` nicht versioniert) |
+| `GARMIN_EMAIL` / `GARMIN_PASSWORD` | Benutzer-Umgebung | nur beim Login in der PowerShell-Sitzung setzen, nie dauerhaft |
+
+Wichtig: `garmin_login.py --force` löscht `garmin_tokens.json` im **aktuell gesetzten** `GARMINTOKENS`-Ordner.
+Vor jedem Login für Saskia deshalb prüfen, dass `$env:GARMINTOKENS` auf `.garminconnect-saskia` zeigt,
+sonst werden Marcs Tokens verworfen.
+
+### Schritt 1: Einmalige Anmeldung (Tokens in den zweiten Ordner)
+
+In einer PowerShell im Repo-Ordner (`E:\Users\Marc\Claude Projekte\GarminConnect`); die Variablen gelten
+nur für dieses Fenster:
+
+```powershell
+$env:GARMINTOKENS = "$env:USERPROFILE\.garminconnect-saskia"
+$env:GARMIN_EMAIL = "<saskias-garmin-e-mail>"
+Remove-Item Env:GARMIN_PASSWORD -ErrorAction SilentlyContinue   # sonst würde Marcs Passwort verwendet
+uv run scripts\garmin_login.py            # fragt Saskias Passwort ohne Echo und den MFA-Code ab
+```
+
+Erwartete Ausgabe: `Angemeldet als: Saskia …` und `Tokens gespeichert in: …\.garminconnect-saskia\garmin_tokens.json`,
+danach die letzten 5 Aktivitäten **ihres** Kontos. Steht dort ein anderer Name, ist die falsche E-Mail gesetzt.
+
+Token für ihre Cloud-Umgebung „Laufanalyse Saskia“ (Variable `GARMIN_TOKENS_B64`) im selben Fenster:
+
+```powershell
+uv run scripts\garmin_login.py --show-token
+```
+
+### Schritt 2: MCP-Server für Saskia am PC
+
+Der MCP-Server erbt die Umgebung des Prozesses, der ihn startet. Zwei Varianten:
+
+**Variante A – gleiche Registrierung, Umgebung im Terminal (einfachste Lösung).** Im Repo greift `.mcp.json`
+(Server `garmin`); vor dem Start von Claude Code die Variablen setzen, dann heißen die Tools weiterhin
+`mcp__garmin__*` und die Skills `/laufanalyse` und `/workout` funktionieren unverändert:
+
+```powershell
+$env:GARMINTOKENS = "$env:USERPROFILE\.garminconnect-saskia"
+$env:LAUFANALYSE_DATA_DIR = "E:\Users\Marc\Claude Projekte\GarminConnect\data\garmin-saskia"
+claude
+```
+
+Kontrolle in der Session: `mcp__garmin__login_status` muss `logged_in_as` = Saskia und
+`token_dir` = `…\.garminconnect-saskia` zeigen.
+
+**Variante B – zweiter Server-Name im User-Scope** (für Sessions außerhalb des Repos oder wenn beide Server
+parallel sichtbar sein sollen):
+
+```powershell
+claude mcp add garmin-saskia -s user `
+  -e "GARMINTOKENS=$env:USERPROFILE\.garminconnect-saskia" `
+  -e "LAUFANALYSE_DATA_DIR=E:\Users\Marc\Claude Projekte\GarminConnect\data\garmin-saskia" `
+  -- uv run "E:\Users\Marc\Claude Projekte\GarminConnect\scripts\garmin_mcp_server.py"
+claude mcp list
+```
+
+Die Tools heißen dann `mcp__garmin-saskia__*`. Die Skills sprechen `mcp__garmin__*` an; in einer Session
+mit Variante B also ausdrücklich sagen „nimm den Server garmin-saskia“, oder Variante A verwenden.
+Innerhalb des Repos sind mit Variante B beide Server (`garmin` = Marc, `garmin-saskia` = Saskia) gleichzeitig
+aktiv; `login_status` beider Server zeigt, welches Konto wo hängt.
+
+### Schritt 3: Tokens erneuern
+
+Läuft das Refresh-Token ab (Symptom: „Authentication failed“ nur bei Saskia), Schritt 1 wiederholen –
+mit gesetztem `GARMINTOKENS` auf `.garminconnect-saskia` und `--force`. Danach `--show-token` erneut
+ausführen und `GARMIN_TOKENS_B64` in der Cloud-Umgebung „Laufanalyse Saskia“ aktualisieren.
+
 ## 3. Tools des MCP-Servers `garmin`
 
 Namen in Claude Code: `mcp__garmin__<tool>`. Rückgabe: normalisiertes JSON (Distanzen m, Zeiten s, Pace

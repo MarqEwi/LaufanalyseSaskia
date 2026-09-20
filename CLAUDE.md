@@ -7,6 +7,21 @@
 - Exportierte Laufdaten gehören nach `E:\Users\Marc\Claude Projekte\GarminConnect\data\garmin\<datum>_<id>\` (das ist `LAUFANALYSE_DATA_DIR`, wird vom Setup-Skript gesetzt).
 - Token-Cache bleibt bewusst außerhalb des Projekts in `%USERPROFILE%\.garminconnect` (nicht versioniert).
 
+## Profile (zwei Personen, ein Repo)
+
+| Cloud-Umgebung | Garmin-Konto | Workout-Vorlagen |
+|---|---|---|
+| „Laufanalyse Marc“ | Marq Ewi | `workouts/marc/` |
+| „Laufanalyse Saskia“ | Saskia | `workouts/saskia/` |
+
+- Die Person ergibt sich **nur** aus `mcp__garmin__login_status` (`logged_in_as`), nie aus dem Repo, dem Branch oder der Ordnerstruktur.
+- Zu Beginn jeder Session, die auf Garmin zugreift, einmal `mcp__garmin__login_status` aufrufen und nennen, wessen Konto verbunden ist. Passt der Name nicht zur Umgebung: stoppen und nachfragen.
+- Zugangsdaten und Tokens liegen pro Umgebung (`GARMIN_EMAIL`, `GARMIN_PASSWORD` nur bis zum ersten Token, danach `GARMIN_TOKENS_B64`). Das Konto der jeweils anderen Person wird nie angefasst.
+- Datenordner sind pro Umgebung getrennt: `LAUFANALYSE_DATA_DIR` setzt der Session-Start-Hook (`.claude/hooks/session-start.sh`) bzw. die Umgebung.
+- Workout-Vorlagen liegen unter `workouts/<person>/` (`marc` oder `saskia`, Kleinbuchstaben); die Skill `/workout` speichert nach der Person aus `login_status`.
+- Saskia: Uhr, Coach/Zonen und Trainingsschwerpunkt sind noch nicht hinterlegt (hier ergänzen, sobald bekannt).
+- Zweite Person am Windows-PC: eigener Token-Ordner `%USERPROFILE%\.garminconnect-saskia`, siehe `docs/garmin-tools.md` Abschnitt 2a.
+
 ## Regeln für dieses Projekt
 
 - Deutsch in allen Ausgaben, Pace in min/km, Distanzen in km, Zeiten als mm:ss.
