@@ -24,6 +24,7 @@ Du erstellst strukturierte Lauf-Workouts und bringst sie auf Wunsch nach Garmin 
 - Vor dem Einplanen `uv run scripts/garmin_workout.py scheduled <YYYY-MM>` aufrufen und prüfen, dass an dem Tag kein
   Doppeleintrag entsteht.
 - Vorlagen enthalten nur Trainingsinhalte, keine Zugangsdaten.
+- Auswertung einer absolvierten Einheit (Cardio/Hyrox): Aktivität des Tages laden (`mcp__garmin__analyze_run` mit `activity_id`), HF-Verlauf in 5-min-Blöcken und Vergleich zur Vorwoche im Chat, danach den Coach-Text nach dem „Coach-Feedback-Format“ aus `workouts/<person>/profil.md`. Ergometer-Werte kommen von PM5-Fotos: ohne Aufkleber = Rudergerät (Schlagzahl um 32), mit „SkiERG“ = Ski (Schlagzahl um 45).
 - **Hochladen, Einplanen und Löschen nur nach ausdrücklicher Bestätigung** der Person im Chat. Vorher immer die
   Struktur zeigen (`show`).
 

@@ -13,7 +13,7 @@ alles unter `data/garmin/<YYYY-MM-DD>_<id>/` und liefert den fertigen Bericht pl
 
 ## Regeln
 
-- Das Repo wird von zwei Personen genutzt (Marc, Saskia). Wessen Lauf du auswertest, ergibt sich aus `mcp__garmin__login_status` (`logged_in_as`): einmal pro Session aufrufen, das verbundene Konto nennen, nie raten. Workout-Vorlagen dieser Person liegen unter `workouts/<person>/` (siehe `CLAUDE.md`, Abschnitt „Profile“). Gibt es `workouts/<person>/profil.md`, nutze dessen Coach-Zonen und Schwellenwerte als Maßstab im Fazit und nenne die Garmin-Zonen daneben.
+- Das Repo wird von zwei Personen genutzt (Marc, Saskia). Wessen Lauf du auswertest, ergibt sich aus `mcp__garmin__login_status` (`logged_in_as`): einmal pro Session aufrufen, das verbundene Konto nennen, nie raten. Workout-Vorlagen dieser Person liegen unter `workouts/<person>/` (siehe `CLAUDE.md`, Abschnitt „Profile“). Gibt es `workouts/<person>/profil.md`, nutze dessen Coach-Zonen und Schwellenwerte als Maßstab im Fazit und nenne die Garmin-Zonen daneben. Enthält das Profil ein „Coach-Feedback-Format“, gib nach dem Bericht zusätzlich den kopierfertigen Coach-Text genau in dieser Form aus (eine Zeile pro Punkt, Leerzeilen dazwischen).
 - Antworte auf Deutsch. Pace immer `m:ss min/km`, Distanzen in km (2 Nachkommastellen), Zeiten `mm:ss` (ab 1 h `h:mm:ss`).
 - **Nie Werte schätzen.** Fehlt etwas (Zeitreihe, Zonen, Wetter), sag es und nenne die Alternative (FIT-Export, anderes Tool). `analysis.notes` enthält solche Lücken.
 - Rohe Zeitreihen nicht in den Chat laden. Arbeite mit `analysis` / `summary_md`; `timeseries.csv` nur gezielt mit kleinen Skripten auswerten.

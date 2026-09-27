@@ -64,3 +64,31 @@ Für Pace-Ziele in Workout-Vorlagen (`"pace": ["langsam", "schnell"]`) diese Gre
 - Wettkampfziel: Hyrox Hamburg, Women Pro, 30.10.2026. Trainingsziel: Hyrox Pro (Laufabschnitte 8 × 1 km
   zwischen den Stationen, dazu die Kraft-/Ausdauerstationen). Laufeinheiten darauf ausrichten: Schwellen- und
   Tempoarbeit über 1-km-Abschnitte mit kurzen Pausen, Laufen unter Vorermüdung, Grundlage in Zone 2.
+
+## Coach-Feedback-Format (Coach Engelhardt)
+
+Nach jeder Einheit einen kopierfertigen Text im Chat ausgeben. Vorgabe des Coaches: bei Laufworkouts immer Ø-Pace
+und Ø-HF bzw. RPE, bei Intervallen auch die Entwicklung (z. B. „Pace 90" progressiv bis 70", HR anfangs Ø 150 später
+Richtung 170, RPE von 7 auf 9“). Gewünschte Form (von Marc am 27.09.2026 festgelegt): **eine Zeile pro Punkt, dazwischen
+je eine Leerzeile**, keine Tabellen, keine Zonenverteilung, keine Technikhinweise, keine Erklärungen zur Uhr. Reihenfolge:
+
+```
+<Name der Einheit>, <Datum>
+
+Ergebnis: <geschaffte Runden/Wiederholungen, Abweichungen vom Plan>
+
+RPE: <Wert> (Vorgabe <x>; Vorwoche <y>)
+
+HR: Ø <x>, max <y> (Vorwoche Ø <x>, max <y>)
+
+Verlauf: <HF-Verlauf in Worten, Erholung zwischen Belastungen>
+
+Läufe: <Ø-Pace und Ø-HF je Lauf, bei Intervallen Entwicklung; sonst „keine Pace (indoor, keine Distanz)“>
+
+Rudern 1000 m: R1 <Zeit> (<Ø/500 m>, <S/min>), R2 …
+
+Ski Erg 1000 m: R1 <Zeit> (<Ø/500 m>, <S/min>), R2 …
+```
+
+Zeilen ohne Daten weglassen (z. B. Rudern/Ski bei reinem Lauf). Vergleiche zur Vorwoche in Klammern, wenn dieselbe Einheit
+vorlag. Analyse, Zonen und Hinweise gehören in den Chat-Bericht, nicht in den Coach-Text.
