@@ -1,0 +1,19 @@
+{
+  "name": "Hyrox Flow Foundation 2 (27.09.)",
+  "sport": "cardio",
+  "description": "Coach Engelhardt, 27.09.2026: 60 min AMRAP, ganze Einheit RPE 3-4, Laufen RPE 4-5 (Talking Pace). Runde: 3min Run, 20m Sled Push, 1000m Ski, 20m Sled Pull, 4min Run, 70m Carry, 5min Run, 50m Walking Lunges, 1000m Row, 6x5 Wall Balls. Laeufe mit HF-Ziel bis 141 bpm (Zone 1-2 Coach Nils). Stationen mit Lap-Taste beenden. Nach 60 Minuten stoppen, egal wo in der Runde. Auf der Uhr ueber Training > Meine Workouts starten, damit jede Station als Runde vorliegt.",
+  "steps": [
+    {"repeat": 3, "steps": [
+      {"type": "interval", "minutes": 3, "hr": [90, 141], "note": "Run 3min RPE 4-5 Talking Pace, HF bis 141"},
+      {"type": "interval", "lap": true, "estimate_minutes": 2, "note": "Sled Push 20m, dann Lap"},
+      {"type": "interval", "lap": true, "estimate_minutes": 5, "note": "Ski 1000m, dann Lap"},
+      {"type": "interval", "lap": true, "estimate_minutes": 2, "note": "Sled Pull 20m, dann Lap"},
+      {"type": "interval", "minutes": 4, "hr": [90, 141], "note": "Run 4min RPE 4-5 Talking Pace, HF bis 141"},
+      {"type": "interval", "lap": true, "estimate_minutes": 2, "note": "Carry 70m, dann Lap"},
+      {"type": "interval", "minutes": 5, "hr": [90, 141], "note": "Run 5min RPE 4-5 Talking Pace, HF bis 141"},
+      {"type": "interval", "lap": true, "estimate_minutes": 3, "note": "Walking Lunges 50m, dann Lap"},
+      {"type": "interval", "lap": true, "estimate_minutes": 5, "note": "Row 1000m, dann Lap"},
+      {"type": "interval", "lap": true, "estimate_minutes": 3, "note": "Wall Balls 6x5, dann Lap"}
+    ]}
+  ]
+}
