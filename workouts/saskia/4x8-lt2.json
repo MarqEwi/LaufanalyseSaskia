@@ -1,0 +1,15 @@
+{
+  "name": "4x8 LT2 (02.10.)",
+  "sport": "running",
+  "description": "Coach Engelhardt, 02.10.2026: 4x8 LT2. WA 5min Z1, 90s Z4, 3min Z2. Main 4x (8min Z3-4 konservativ anfangen, Satz fuer Satz schneller; 1,5min Z2). 10min Z1. Pace-Zonen Laufzonen NEU (Coach Nils, 20.09.2026): Z1 langsamer als 6:05, Z2 5:35-6:05, Z3 5:05-5:34, Z4 4:43-5:04 min/km.",
+  "steps": [
+    {"type": "warmup",   "minutes": 5,   "pace": ["7:30", "6:05"], "note": "Einlaufen Z1, langsamer als 6:05"},
+    {"type": "warmup",   "minutes": 1.5, "pace": ["5:04", "4:43"], "note": "90s Z4 Pace 4:43-5:04"},
+    {"type": "warmup",   "minutes": 3,   "pace": ["6:05", "5:35"], "note": "3min Z2 Pace 5:35-6:05"},
+    {"repeat": 4, "steps": [
+      {"type": "interval", "minutes": 8,   "pace": ["5:34", "4:43"], "note": "8min Z3-4, konservativ anfangen, Satz fuer Satz schneller"},
+      {"type": "recovery", "minutes": 1.5, "pace": ["6:05", "5:35"], "note": "1,5min Z2 Pace 5:35-6:05"}
+    ]},
+    {"type": "cooldown", "minutes": 10,  "pace": ["7:30", "6:05"], "note": "Auslaufen Z1, langsamer als 6:05"}
+  ]
+}
