@@ -1,0 +1,16 @@
+{
+  "name": "Hyrox Intervall 3x7min (04.10.)",
+  "sport": "cardio",
+  "description": "Coach Engelhardt, 04.10.2026, RPE 8. Pre: 500m Ski Erg Race Pace, direkt 30 Wallballs, 3 min Pause. Main: 3 x 7 min Intervall mit 2 min aktiver Pause (Gehen). Block 1: Buy-in 500m Run RP, dann AMRAP 15m Sled Push + 10 Bar-Facing Burpees. Block 2: Buy-in 500m Rudern RP, dann AMRAP 25m Farmers Carry + 12 Burpee Broad Jumps. Block 3: Buy-in 500m Run RP, dann AMRAP 20m Sandbag Lunges + 20 Wallballs. Pre-Schritte mit Lap-Taste beenden, Bloecke und Pausen laufen nach Zeit.",
+  "steps": [
+    {"type": "warmup",   "lap": true, "estimate_minutes": 2, "note": "Pre: Ski Erg 500m Race Pace, dann Lap"},
+    {"type": "warmup",   "lap": true, "estimate_minutes": 2, "note": "Pre: 30 Wallballs, dann Lap"},
+    {"type": "rest",     "minutes": 3, "note": "Pause 3 min"},
+    {"type": "interval", "minutes": 7, "note": "Block 1: 500m Run RP, dann AMRAP 15m Sled Push + 10 Bar-Facing Burpees"},
+    {"type": "recovery", "minutes": 2, "note": "2 min aktive Pause, gehen"},
+    {"type": "interval", "minutes": 7, "note": "Block 2: 500m Rudern RP, dann AMRAP 25m Farmers Carry + 12 Burpee Broad Jumps"},
+    {"type": "recovery", "minutes": 2, "note": "2 min aktive Pause, gehen"},
+    {"type": "interval", "minutes": 7, "note": "Block 3: 500m Run RP, dann AMRAP 20m Sandbag Lunges + 20 Wallballs"},
+    {"type": "cooldown", "lap": true, "estimate_minutes": 5, "note": "Auslaufen / Gehen nach Gefuehl, dann Lap"}
+  ]
+}
