@@ -1,0 +1,26 @@
+{
+  "name": "Single Pro Generalprobe (Half-Sim)",
+  "sport": "cardio",
+  "description": "Coach Engelhardt, Key Session. WA 15min Bike oder Jog easy + 2-3 Steigerungen, ein paar BBJ + WB. 8x 500m Run @ 5:05-5:15/km (ruhig, RP) + halbe Station mit Single-Pro-Gewichten, alles allein: 500m Ski, 25m Sled Push 152kg, 25m Sled Pull 103kg, 40m BBJ, 500m Row, 100m Farmers 2x24kg, 50m Lunges 20kg, 50 WB 6kg in 10er Sets. RPE 7, soll sich machbar anfuehlen, kein Test. Cooldown 10-15min Bike easy. Laeufe und Stationen mit Lap-Taste beenden.",
+  "steps": [
+    {"type": "warmup",   "minutes": 15, "note": "WA 15min Bike oder Jog easy"},
+    {"type": "warmup",   "lap": true, "estimate_minutes": 5, "note": "2-3 Steigerungen, ein paar BBJ + WB, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 2.6, "note": "Run 1: 500m @ 5:05-5:15, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 2.5, "note": "Station 1: 500m Ski, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 2.6, "note": "Run 2: 500m @ 5:05-5:15, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 2, "note": "Station 2: 25m Sled Push 152kg, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 2.6, "note": "Run 3: 500m @ 5:05-5:15, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 2, "note": "Station 3: 25m Sled Pull 103kg, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 2.6, "note": "Run 4: 500m @ 5:05-5:15, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 3, "note": "Station 4: 40m Burpee Broad Jumps, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 2.6, "note": "Run 5: 500m @ 5:05-5:15, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 2.5, "note": "Station 5: 500m Row, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 2.6, "note": "Run 6: 500m @ 5:05-5:15, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 1.5, "note": "Station 6: 100m Farmers Carry 2x24kg, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 2.6, "note": "Run 7: 500m @ 5:05-5:15, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 3, "note": "Station 7: 50m Lunges 20kg, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 2.6, "note": "Run 8: 500m @ 5:05-5:15, dann Lap"},
+    {"type": "interval", "lap": true, "estimate_minutes": 4, "note": "Station 8: 50 Wallballs 6kg in 10er Sets, dann Lap"},
+    {"type": "cooldown", "lap": true, "estimate_minutes": 12, "note": "Cooldown 10-15min Bike easy, dann Lap"}
+  ]
+}
